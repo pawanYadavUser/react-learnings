@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
+import Counter from "./Counter";
 
 function App() {
   const name = "Dave";
@@ -16,6 +17,7 @@ function App() {
       <Header />
       <Content />
       <Footer />
+      <Counter />
     </div>
   );
 }

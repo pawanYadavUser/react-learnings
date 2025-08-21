@@ -1,0 +1,51 @@
+1. semantics elements? Class vs ids ?
+✅ HTML Semantic Elements
+Semantic elements = elements with meaningful names that describe their purpose in the document.
+Examples:
+<header> → top section, logo, navigation
+<nav> → navigation links
+<main> → main content of the page
+<section> → thematic grouping of content
+<article> → independent piece of content (blog, news)
+<aside> → sidebar, ads, related info
+<footer> → bottom section, copyright, links
+<figure> + <figcaption> → images with captions
+👉 Advantage: improves SEO, accessibility (screen readers), maintainability.
+
+✅ Classes vs IDs in HTML
+
+Class (class)
+Can be reused on multiple elements
+Used for grouping elements together (for CSS or JS)
+Example: .btn-primary { background: blue }
+
+ID (id)
+Unique in the entire page (should not repeat)
+Used when you want to specifically target one element (CSS or JS)
+Example: #loginForm { border: 1px solid }
+
+👉 In React, IDs are rare — we rely more on classes and state/props for uniqueness. 
+IDs are useful for form labels (<label for="id">) or anchor navigation.
+
+🔥 Quick Interview Tip:
+If they ask “When should you use class vs id?” →
+👉 “I’ll use id for uniquely identifying an element (like a form or section),
+ and class for reusable styling or grouping. In React, since elements are component-driven, 
+I mostly rely on classes and props/state instead of IDs.”
+
+----------------------------------
+
+2. Class vs functional components?
+✅ Key Differences (Interview-Style)
+Feature	Class Component	Functional Component
+Syntax	ES6 class, extends React.Component	Simple JS function
+State	this.state, this.setState()	useState Hook
+Lifecycle	componentDidMount, componentDidUpdate	useEffect Hook
+this binding	Required	Not needed
+Performance	Slightly heavier	Lighter, easier to optimize
+Modern usage	Legacy / rare	Preferred in React today
+
+✅ Interview Tip (Perfect Answer)
+
+👉 “Class components were the older way to handle state and lifecycle using this and lifecycle methods. With the introduction of Hooks in React 16.8, functional components became the standard because they’re simpler, cleaner, and cover everything class components can do — 
+including state and side effects — without the extra boilerplate.”
