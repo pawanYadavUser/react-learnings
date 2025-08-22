@@ -49,3 +49,24 @@ Modern usage	Legacy / rare	Preferred in React today
 
 👉 “Class components were the older way to handle state and lifecycle using this and lifecycle methods. With the introduction of Hooks in React 16.8, functional components became the standard because they’re simpler, cleaner, and cover everything class components can do — 
 including state and side effects — without the extra boilerplate.”
+
+--------------------------------------------------------
+
+3. ✅ What is useMemo in React?
+useMemo is a React Hook that lets you memoize (cache) the result of a calculation 
+so that it is not recomputed on every render unless its dependencies change.
+Syntax:
+const memoizedValue = useMemo(()=> computeExpensiveValue(a,b), [a,b]);
+
+Meaning:
+Run the function computeExpensiveValue(a, b) only when a or b change.
+Otherwise, just return the cached result from last render.
+
+✅ Interview-style Answer
+👉 “useMemo memoizes the result of an expensive calculation and recomputes it only when dependencies change. It’s useful for optimization, 
+preventing recalculations on every render. 
+In my random number list example, I use useMemo so the 40 random numbers don’t regenerate on every re-render when the input changes.”
+
+-----------------------------------------------------
+
+Do you want me to also explain how useMemo is different from useCallback? (that’s another common trap in interviews)?

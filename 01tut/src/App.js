@@ -4,6 +4,8 @@ import Header from "./Header";
 import Content from "./Content";
 import Footer from "./Footer";
 import Counter from "./Counter";
+import MemoizedExample from "./MemoizedExample";
+import RandomList from "./RandomList";
 
 function App() {
   const name = "Dave";
@@ -18,6 +20,8 @@ function App() {
       <Content />
       <Footer />
       <Counter />
+      <MemoizedExample />
+      <RandomList />
     </div>
   );
 }
