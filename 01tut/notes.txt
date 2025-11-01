@@ -283,3 +283,36 @@ Chapter 2:- App and JSX
         {/* <p>{true}</p> */}
       </header>
     </div>
+
+======================================================================
+
+
+2/11/2025
+
+Master modern React (Learn By Doing)! React Query, Redux Toolkit, Context API, Tailwind, advanced patterns
+
+1. function as props
+- reference a prop from child component, that is passed from parent component to it.
+- pass the same function to mulitple components
+- Interview questions!
+  pass arguments to functions being referenced from child component , present in
+  parent component.
+
+
+2. React state(useState)
+is used for components whose values changes over time!
+like title of the application
+
+3. Event handling
+difference between eventHandlers in react and html
+- in react, we follow camel casing
+- in react, we write event handlers inside {}
+- in {}, u dont need to provide () after eventHandler function name, eventHandler reference should not be function call
+e.g.,
+not be like this {()=>{eventHandler()}} 
+shoud be like this {eventHandler}
+
+4. Conditional rendering
+
+
+

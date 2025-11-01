@@ -1,9 +1,9 @@
 const Content = () => {
-  const handleNameChanges = () => {
+  function handleNameChanges() {
     const names = ["Aman", "Pawan", "Jay", "Rahul"];
     const int = Math.floor(Math.random() * 4);
     return names[int];
-  };
+  }
   return (
     <main>
       <p>{handleNameChanges()}</p>
