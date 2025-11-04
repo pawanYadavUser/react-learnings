@@ -284,6 +284,7 @@ Chapter 2:- App and JSX
       </header>
     </div>
 
+
 ======================================================================
 
 
@@ -291,12 +292,53 @@ Chapter 2:- App and JSX
 
 Master modern React (Learn By Doing)! React Query, Redux Toolkit, Context API, Tailwind, advanced patterns
 
+Intro to JSX:-
+- In html , it is class, in JSX it is className, as class is reserved keyword in JavaScript
+- In JSX component, only JSX can be present, so always wrap ur html inside paranthesis
+- for -> htmlFor in JSX, as for is reserved in JS
+- handlers are always in camelcase 
+e.g., onclick -> onClick
+
+Types of component:-
+1. Functional component:- is a js function that accepts props as argument and returning
+JSX (a markup that describes a UI).
+
+2. Class based component:- see example ClassComponent.jsx
+
+
+Types of export:-
+- export default :
+   can rename it to any value of your choice
+   only one default export in a given module
+- name export :
+    have to use same name, given in component definition
+    can use multiple values from the module
+
+
+Props:- 
+- are object containing values of the attributes of the tag
+- components are used to segment the UI into reusable separated node_modules
+- props can be injected from one parent component to another child component
+e.g., code example to show the component reusability with different props getting parsed.
+
+
+Props.children :-
+- to access children , use props.children
+- props present between <> & </> are children
+Note:- if using images inside your project , always locate them inside src folder
+
+
+Props immutability :-
+Editing props value inside a child component or within component definition not allowed
+
+
 1. function as props
 - reference a prop from child component, that is passed from parent component to it.
 - pass the same function to mulitple components
 - Interview questions!
   pass arguments to functions being referenced from child component , present in
   parent component.
+  use arrow notation
 
 
 2. React state(useState)
@@ -313,6 +355,25 @@ not be like this {()=>{eventHandler()}}
 shoud be like this {eventHandler}
 
 4. Conditional rendering
+- ternary operator
+- short circuit approach e.g., userLogin.jsx
+
+5. Map Method (List rendering) & Unique key Props (mapping)
+each child in a key should have a unique key prop issue.
+solution:-
+provide a key that is uniqe for each element in parent div of the map function definition
+e.g.,
+along with other params , give value for key param also.
+e.g.,
+ListRendering.jsx
+
+6. Regular CSS
+- inline styling
+- class based style
+- CSS module
+
+7. 
+
 
 
 

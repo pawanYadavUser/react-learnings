@@ -13,6 +13,13 @@ import FunctionAsProps from "./components/FunctionAsProps.jsx";
 import Title from "./components/Title.jsx";
 import ClickEventHandler from "./components/ClickEventHandler.js";
 import UserLogin from "./components/UserLogin.jsx";
+import { Welcome } from "./components/ClassComponent.jsx";
+import halo from "./images/halo.jpg";
+import ListRendering from "./components/ListRendering.jsx";
+import RegularStyleSheet from "./components/RegularStyleSheet.js";
+import InlineStyle from "./components/InlineStyle.js";
+import "./components/appStyle.css";
+import myAppStyle from "./components/myAppStyle.module.css";
 
 function App() {
   const name = "Dave";
@@ -57,10 +64,19 @@ function App() {
         country="Sweden"
         username2="Alan stafford2"
       /> */}
-
       {/* <Title /> */}
       {/* <ClickEventHandler /> */}
-      <UserLogin />
+      {/* <UserLogin />
+      <Welcome username="Pawan yadav">
+        <p>I am 28 years old</p>
+        <p>I am a react developer</p>
+        <img src={halo}></img>
+      </Welcome> */}
+      {/* <ListRendering /> */}
+      {/* <RegularStyleSheet primary={false} /> */}
+      <InlineStyle />
+      <h1 className="error">Error !!!!!!!!!</h1>
+      <h2 className={myAppStyle.success}>Success############</h2>
     </div>
   );
 }

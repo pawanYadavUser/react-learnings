@@ -7,10 +7,11 @@ export default function FunctionAsProps(props) {
     const countryValue = country ?? "country not found!";
     alert(`Welcome parent from !!!!!!!!!! ${username} |||||| ${countryValue}`);
   }
+
   return (
     <div>
       <h1>
-        This is parent component for user {props.username} and country{" "}
+        This is parent component for user {props.username} and country
         {props.country}
       </h1>
       <ChildComponent
