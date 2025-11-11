@@ -21,6 +21,7 @@ import InlineStyle from "./components/InlineStyle.js";
 import "./components/appStyle.css";
 import myAppStyle from "./components/myAppStyle.module.css";
 import FormInput from "./components/FormInput.js";
+import HookStateArray from "./components/HookStateArray.js";
 
 function App() {
   const name = "Dave";
@@ -90,6 +91,7 @@ function App() {
       <h1 className="error">Error !!!!!!!!!</h1>
       <h2 className={myAppStyle.success}>Success############</h2> */}
       {/* <FormInput /> */}
+      <HookStateArray />
     </div>
   );
 }
