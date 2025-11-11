@@ -376,6 +376,20 @@ ListRendering.jsx
 form elements whose value and lifecycle are controlled by react, are known as controlled component.
 
 
+SECTION 2  Hooks (ReactJs advanced topics)
+
+8. useEffect Intro
+useEffect is a function that takes two arguments 
+one function :- called effect 
+one empty array :- dependency array.
+
+if dependency array is empty then the effect function only executes once for the first time render.
+after that, effect function wont be executed for successive re-renders.
+
+9. Component did mount and Update:-
+if no dependency array is passed , then useEffect's effect function will be executed after every re-renders.
+useEffect hook is used inside a JSX component, so it has access to all the states and props.
+
 
 
 

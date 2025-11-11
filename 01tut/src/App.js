@@ -21,7 +21,7 @@ import InlineStyle from "./components/InlineStyle.js";
 import "./components/appStyle.css";
 import myAppStyle from "./components/myAppStyle.module.css";
 import FormInput from "./components/FormInput.js";
-import HookStateArray from "./components/HookStateArray.js";
+import HookStateArray from "./components/useStateHook/HookStateArray.js";
 
 function App() {
   const name = "Dave";
