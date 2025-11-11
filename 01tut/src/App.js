@@ -20,12 +20,24 @@ import RegularStyleSheet from "./components/RegularStyleSheet.js";
 import InlineStyle from "./components/InlineStyle.js";
 import "./components/appStyle.css";
 import myAppStyle from "./components/myAppStyle.module.css";
+import FormInput from "./components/FormInput.js";
 
 function App() {
   const name = "Dave";
   const handleNameChanges = () => {
+    // Math.random()
+    // → Generates a random number between 0 (inclusive) and 1 (exclusive).
+    // For example, 0.13, 0.78, 0.999, etc.
+
+    // Math.random() * 4
+    // → Multiplies that random number by 4, giving a value between 0 and 3.999....
+
+    // Math.floor(Math.random() * 4)
+    // → Math.floor() rounds the value down to the nearest integer.
+    // So possible outcomes are: 0, 1, 2, or 3.
+
     const names = ["anuj", "durgesh", "shahrukh", "rohitash", "akash"];
-    const int = Math.floor(Math.random() * 4);
+    const int = Math.floor(Math.random() * names.length);
     return names[int];
   };
   return (
@@ -64,7 +76,7 @@ function App() {
         country="Sweden"
         username2="Alan stafford2"
       /> */}
-      {/* <Title /> */}
+      <Title />
       {/* <ClickEventHandler /> */}
       {/* <UserLogin />
       <Welcome username="Pawan yadav">
@@ -74,9 +86,10 @@ function App() {
       </Welcome> */}
       {/* <ListRendering /> */}
       {/* <RegularStyleSheet primary={false} /> */}
-      <InlineStyle />
+      {/* <InlineStyle />
       <h1 className="error">Error !!!!!!!!!</h1>
-      <h2 className={myAppStyle.success}>Success############</h2>
+      <h2 className={myAppStyle.success}>Success############</h2> */}
+      {/* <FormInput /> */}
     </div>
   );
 }

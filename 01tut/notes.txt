@@ -372,7 +372,9 @@ ListRendering.jsx
 - class based style
 - CSS module
 
-7. 
+7. Form input (Controlled Component)
+form elements whose value and lifecycle are controlled by react, are known as controlled component.
+
 
 
 
