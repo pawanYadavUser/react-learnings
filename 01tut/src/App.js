@@ -22,6 +22,12 @@ import "./components/appStyle.css";
 import myAppStyle from "./components/myAppStyle.module.css";
 import FormInput from "./components/FormInput.js";
 import HookStateArray from "./components/useStateHook/HookStateArray.js";
+import DemoFragment from "./components/reactFragment/DemoFragment.jsx";
+import MyTable from "./components/reactFragment/MyTable.js";
+import Counter2 from "./components/useStateHook/Counter2.js";
+import Counter3 from "./components/useStateHook/Counter3.js";
+import ExampleUpdateTitleOnButtonClick from "./components/useEffectPractice/ExampleUpdateTitleOnButtonClick.js";
+import ExampleConditionallyRunUseEffect from "./components/useEffectPractice/ExampleConditionallyRunUseEffect.js";
 
 function App() {
   const name = "Dave";
@@ -92,6 +98,12 @@ function App() {
       <h2 className={myAppStyle.success}>Success############</h2> */}
       {/* <FormInput /> */}
       <HookStateArray />
+      <DemoFragment />
+      <MyTable />
+      <Counter2 />
+      <Counter3 />
+      {/* <ExampleUpdateTitleOnButtonClick /> */}
+      <ExampleConditionallyRunUseEffect />
     </div>
   );
 }

@@ -375,10 +375,96 @@ ListRendering.jsx
 7. Form input (Controlled Component)
 form elements whose value and lifecycle are controlled by react, are known as controlled component.
 
+8. React fragment!
+is a common react pattern for a component to return multiple values.
+Fragments allows us to group a list of children elements without adding extra node to the DOM.
+
+main.fa7abc15cec20aad9850.hot-update.js:226  In HTML, <tbody> cannot be a child of <div>.
+This will cause a hydration error.
+
+  <App>
+    <div className="App">
+      <Mytable>
+>       <div>
+>         <tbody>
+So here we will use React.Fragment to get rid of the extra div tag that is creating hydration error
+here!
+e.g.,
+DemoFrag folder/
+
+also to reduce the syntax for react.Fragement, u can use <> </> empty tags.
+
+also only one attribute can be passed to React.Fragment tag ie., key , 
+and which is also not allowed if u r using <></> for Fragments.
+
+
 
 SECTION 2  Hooks (ReactJs advanced topics)
 
-8. useEffect Intro
+1. Introducion to hooks
+Hooks are the new feature addition in react 16.8, that enablse us to make use of the state and lifecycle
+features without a class.
+
+
+will be able to hook into react state and make use all of its state features and functional components.
+
+As a matter of fact , you can achieve almost all the functionality using react hooks with lesser code
+tht you can achieve using react lifecycle methods 
+
+why its neccessary to learn react hooks?
+- with the use of hooks , we dont need to use this keyword anylonger
+- no more method binding
+- classess makes hot reloading very slow as classes dont minify very well.
+- hooks allows sharing stateful logic across multiple components, without changing your component
+  hierarchy
+- hooks only works with functional components, so dont use them with class components.
+- hooks do not contain any breaking changes and their release is backward compatible.
+
+2. useState hooks example - already done
+create a react component, with a button and a div showing content of variable count.
+using useState hook, update he value of this variable once button is clicked
+e.g., Components/useStateHook/Counter2.js
+<button onClick={setCount(count - 1)}>Decrement</button>
+<button onClick={setCount(0)}>Reset</button>
+gives error like react limits the rerender to avoid infinite loop
+Because setCount(count - 1) executes immediately during render, not on button click.
+React expects:
+onClick={() => setCount(count - 1)}
+
+✔ Simple explanation:
+prev just means:
+setCount(prev => prev + 1);
+setCount(test => test + 1);
+setCount(initialValue => initialValue + 1);
+setCount(x => x + 1);
+setCount(current => current + 1);
+👉 “Whatever the state value was right before this update.”
+You are telling React:
+👉 “Take the latest value, then increase it.”
+
+3. Update states based on previous state value.
+- react updates state in batches
+- becoz on each state update, the component is rerendered , so if a state is updated 1000 times, then
+the component will be rerendered 1000 times, that can greatly impact the performance.
+- e.g., count+1 multiple times call via setCount().
+- e.g., AdvancedConecepts > Counter2.js
+
+4. Object as state variable!
+- use spread oeprator if you want to update object' state using useState hook!
+
+===================================
+
+interview questions:-
+1. useState vs useEffect vs useRef vs useMemoised vs useCallback
+2. write middleware for logging url name, http method names, and api response time.
+3. control the server to respond only 5 apis in a minute.
+4. eventloop and its phases
+5. coding questions for nodejs and react js interview
+6. if i dont use setter method of useState hook, and update the component state  directly 
+will that work?
+7. if i dont pass any dependency list in useEffect hook or empty array , then what happen?
+
+5. useEffect Intro
 useEffect is a function that takes two arguments 
 one function :- called effect 
 one empty array :- dependency array.
@@ -386,7 +472,7 @@ one empty array :- dependency array.
 if dependency array is empty then the effect function only executes once for the first time render.
 after that, effect function wont be executed for successive re-renders.
 
-9. Component did mount and Update:-
+6. Component did mount and Update:-
 if no dependency array is passed , then useEffect's effect function will be executed after every re-renders.
 useEffect hook is used inside a JSX component, so it has access to all the states and props.
 
