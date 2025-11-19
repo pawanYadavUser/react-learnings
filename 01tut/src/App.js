@@ -28,6 +28,11 @@ import Counter2 from "./components/useStateHook/Counter2.js";
 import Counter3 from "./components/useStateHook/Counter3.js";
 import ExampleUpdateTitleOnButtonClick from "./components/useEffectPractice/ExampleUpdateTitleOnButtonClick.js";
 import ExampleConditionallyRunUseEffect from "./components/useEffectPractice/ExampleConditionallyRunUseEffect.js";
+import EffectCleanupLogMousePointer from "./components/useEffectPractice/EffectCleanupLogMousePointer.js";
+import EffectComponentWillUnmount from "./components/useEffectPractice/EffectComponentWillUnmount.js";
+import FetchDataUsingAxios from "./components/FetchData/FetchDataUsingAxios.js";
+import FetchSinglePostDataUsingAxios from "./components/FetchData/FetchSinlgePostDataUsingAxios.js";
+import ComponentC from "./components/context/ComponentC.js";
 
 function App() {
   const name = "Dave";
@@ -103,7 +108,12 @@ function App() {
       <Counter2 />
       <Counter3 />
       {/* <ExampleUpdateTitleOnButtonClick /> */}
-      <ExampleConditionallyRunUseEffect />
+      {/* <ExampleConditionallyRunUseEffect /> */}
+      {/* <EffectCleanupLogMousePointer /> */}
+      <EffectComponentWillUnmount />
+      <FetchDataUsingAxios />
+      <FetchSinglePostDataUsingAxios />
+      <ComponentC />
     </div>
   );
 }

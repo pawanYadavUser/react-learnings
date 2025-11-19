@@ -468,14 +468,82 @@ will that work?
 useEffect is a function that takes two arguments 
 one function :- called effect 
 one empty array :- dependency array.
+It is used to perform side effects in a component.e.g., 
+- updating a DOM
+- fetching details or timers
+
 
 if dependency array is empty then the effect function only executes once for the first time render.
 after that, effect function wont be executed for successive re-renders.
+But if no dependency array is provided, then it will be executed after every render!
+And components usually renders after each n every props or state update.
 
 6. Component did mount and Update:-
 if no dependency array is passed , then useEffect's effect function will be executed after every re-renders.
 useEffect hook is used inside a JSX component, so it has access to all the states and props.
 
+7. Conditionally run the effect:-
+Pass the state in the dependency array, so that if it is updated, then useEffect effect function will be executed
+
+8. Effect cleanup function:- Tidy up the code before component unmounts.
+Avoid memory leaks, & unwnated code behaviour
+e.g.,
+EffectCleanupLogMousePointer.js
+
+9. Component will unmount:-
+e.g., EffectComponentWillUnmount.js
+useEffect(() => {
+  // 1. Effect code runs only ONCE (after first render)
+  
+  return () => {
+    // 2. Cleanup runs ONLY when the component UNMOUNTS
+  };
+}, []);
+
+✔ First render
+React renders your component
+THEN it runs the useEffect() callback
+The cleanup function is registered, but NOT executed
+❌ Cleanup NOT executed here
+✔ When does cleanup run?
+Cleanup runs ONLY when:
+The component unmounts
+OR the effect is about to re-run (if dependencies change — but here they don't)
+Since your dependency array is [], the effect NEVER re-runs, so cleanup ONLY runs on unmount.
+
+🎯 So why doesn’t cleanup run immediately?
+Because React follows this flow:
+1️⃣ Render component
+2️⃣ Run effect (mount phase)
+3️⃣ Wait... component stays mounted
+4️⃣ Cleanup only when component unmounts
+React never runs cleanup right after the effect runs.
 
 
+10. Fetch multiple posts:-
+- use axios lib to fetch data from api
+e.g.,
+FetchDataUsingAxios.js
+FetchSinglePostDataUsingAxios.js
+
+11. Implement Context:-
+The React Context API allows you to create global variables that can be used anywhere in your component hierarchy.
+You use it when some data needs to be accessed by many components—for example:
+Theme (light/dark mode)
+Logged-in user details
+Language
+Global settings
+Cart items in an e-commerce app
+Authentication tokens
+
+📌 Why do we need Context?
+Without context ↓
+You pass props down many nested components (“prop drilling”), which becomes messy.
+With context ↓
+Any deeply nested component can access the data directly.
+
+e.g.,
+context/ componentC.js componentY.js componentZ.js
+
+but why we use { children } in GlobalProvider.js rather than (children) 
 
