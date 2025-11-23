@@ -33,7 +33,12 @@ import EffectComponentWillUnmount from "./components/useEffectPractice/EffectCom
 import FetchDataUsingAxios from "./components/FetchData/FetchDataUsingAxios.js";
 import FetchSinglePostDataUsingAxios from "./components/FetchData/FetchSinlgePostDataUsingAxios.js";
 import ComponentC from "./components/context/ComponentC.js";
-
+import UseReducerHookExample1 from "./components/useReducerHook/UseReducerHookExample1.js";
+import UseReducerHookExample2 from "./components/useReducerHook/UseReducerHookExample2.js";
+import UseReducerHookMultipleUseReducer from "./components/useReducerHook/UseReducerHookMultipleUseReducer.js";
+import UseContextAndUseReducer from "./components/useReducerHook/UseContextAndUseReducer.js";
+import UseReducerDataFetch from "./components/useReducerHook/UseReducerDataFetch.js";
+import MainComponent from "./components/usecallbackPractice/MainComponent.js";
 function App() {
   const name = "Dave";
   const handleNameChanges = () => {
@@ -114,6 +119,12 @@ function App() {
       <FetchDataUsingAxios />
       <FetchSinglePostDataUsingAxios />
       <ComponentC />
+      {/* <UseReducerHookExample1 /> */}
+      <UseReducerHookExample2 />
+      <UseReducerHookMultipleUseReducer />
+      <UseContextAndUseReducer />
+      <UseReducerDataFetch />
+      <MainComponent />
     </div>
   );
 }

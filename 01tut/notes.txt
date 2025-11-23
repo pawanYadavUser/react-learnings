@@ -547,3 +547,42 @@ context/ componentC.js componentY.js componentZ.js
 
 but why we use { children } in GlobalProvider.js rather than (children) 
 
+12. useReducer
+useReducer
+👉 Best for complex state logic
+Useful when your state has multiple sub-values or when updates depend on previous state.
+Similar to Redux reducer pattern.
+Updates state based on actions.
+
+When to use
+When the state is complex or deeply nested.
+When multiple actions update the same state.
+When you want centralized state update logic.
+When the next state depends heavily on the previous state.
+When you want more predictable and testable updates.
+
+| Feature        | useState                    | useReducer                        |
+| -------------- | --------------------------- | --------------------------------- |
+| Best for       | Simple state                | Complex state                     |
+| Update style   | Direct setter               | Dispatch actions                  |
+| Logic          | Inline inside component     | Centralized in reducer            |
+| Ideal when     | Few actions, simple updates | Many actions, complex transitions |
+| Learning curve | Easy                        | Medium                            |
+
+
+13. useReducer state and action objects exmaple:-
+use object as state and action values for creating counters.
+e.g.,
+UseReducerHookExample2.js
+
+14. Mulitple useRedcuer example:-
+e.g., UseReducerHookMultipleUseReducer.js
+
+15. useContext and useReducer
+e.g., UseContextAndUseReducer.js
+
+16. useState data fetch:-
+
+17. useReducer data fetch:-
+
+
