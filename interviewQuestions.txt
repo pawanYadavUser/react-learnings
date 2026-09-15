@@ -1,0 +1,269 @@
+You're very close. 8/10. The only important correction is when the effect runs.
+
+You said:
+
+"it will run in the same state snapshot render when it changes to 20"
+
+Not exactly.
+
+What actually happens
+
+Suppose:
+
+useEffect(() => {
+    console.log("Fetching users");
+    fetchUsers();
+}, [userId]);
+
+Initially:
+
+userId = 10
+
+Component renders → React commits the render → effect runs.
+
+Then:
+
+userId: 10 → 20
+
+The sequence is:
+
+userId changes
+      ↓
+React schedules update
+      ↓
+Component re-renders
+      ↓
+React compares dependency values
+      ↓
+10 !== 20
+      ↓
+Effect runs
+
+Then:
+
+20 → 30
+
+Same process:
+
+20 !== 30
+      ↓
+Effect runs again
+
+If:
+
+30 → 30
+
+the dependency hasn't changed, so the effect doesn't run again.
+
+Why put userId in the dependency array?
+
+Your answer is conceptually right, but I'd phrase it differently.
+
+Don't say:
+
+❌ "track userId changes in realtime"
+
+Say:
+
+✅ "We include userId because the effect depends on it. Whenever userId changes between renders, React re-runs the effect so that the side effect uses the current userId."
+
+This is particularly useful for API calls:
+
+useEffect(() => {
+    fetch(`/api/users/${userId}`);
+}, [userId]);
+
+If the user changes from ID 10 to ID 20, React fetches the data for user 20.
+
+🔥 Interview follow-up
+
+Now let's make it slightly harder.
+
+Consider:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+}, []);
+
+What problem do you see here?
+
+And what do you think happens if the component is removed/unmounted?
+
+Today 11:55 PM
+i think it will try to print hello repeatedly after 1 sec
+and removing it will stop that
+
+You're right about the first part, but there's an important React gotcha in the second part.
+
+What happens?
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+}, []);
+
+The interval starts, and you'll get:
+
+Hello
+Hello
+Hello
+Hello
+...
+
+every ~1 second.
+
+But removing the component does NOT automatically stop the interval ❌
+
+setInterval() is an external resource created by your code. React doesn't automatically know that it needs to cancel it.
+
+So you need a cleanup function:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, []);
+
+Now the lifecycle is:
+
+Component mounts
+      ↓
+useEffect runs
+      ↓
+setInterval starts
+      ↓
+Hello every 1 second
+      ↓
+Component unmounts
+      ↓
+cleanup function runs
+      ↓
+clearInterval(timer)
+      ↓
+Timer stopped
+🎯 Interview answer
+
+"useEffect can return a cleanup function. Cleanup is used to release resources created by the effect, such as timers, subscriptions, event listeners, or ongoing requests. In this example, I would call clearInterval when the component unmounts to prevent the interval from continuing to run."
+
+This is very important for your interview because it shows you understand more than just the syntax of useEffect.
+
+Question 7 — Cleanup + dependency
+
+Now consider:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log(userId);
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, [userId]);
+
+Suppose:
+
+userId = 10
+
+Then it changes to:
+
+userId = 20
+
+Before React runs the new effect for userId = 20, what happens to the old interval that was printing 10?
+
+A) Both intervals continue
+B) React runs the cleanup and removes the old interval
+C) The old interval automatically changes from 10 to 20
+D) Nothing happens
+
+c
+
+Good guess, but the correct answer is B. This is an important useEffect lifecycle rule.
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log(userId);
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, [userId]);
+
+When:
+
+userId: 10 → 20
+
+React does:
+
+Previous effect
+    ↓
+cleanup()
+    ↓
+clearInterval(old timer)
+    ↓
+component renders with userId = 20
+    ↓
+new effect runs
+    ↓
+new timer starts
+
+So there is never supposed to be an old timer printing 10 alongside the new timer printing 20.
+
+Why doesn't it automatically change 10 → 20?
+
+Because this:
+
+setInterval(() => {
+    console.log(userId);
+}, 1000);
+
+created a callback associated with that particular effect execution. React doesn't modify the already-created timer's callback when userId changes.
+
+Instead:
+
+old effect → cleanup → new effect
+
+This pattern is extremely important.
+
+🎯 Remember this rule
+
+When dependencies change:
+
+Cleanup of the previous effect happens first, then the new effect runs.
+
+And when the component unmounts:
+
+Cleanup runs, but the new effect does not run.
+
+Question 8 — useEffect + API call
+
+Imagine this real application:
+
+function UserProfile({ userId }) {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        fetch(`/api/users/${userId}`)
+            .then(res => res.json())
+            .then(data => setUser(data));
+    }, [userId]);
+
+    return <h1>{user?.name}</h1>;
+}
+
+Why is [userId] important here?
+
+What would happen if we incorrectly wrote:
+
+}, []);
+
+instead?
+
+Give it a shot.
