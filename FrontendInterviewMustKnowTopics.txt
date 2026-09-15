@@ -1,0 +1,417 @@
+What level of React do they likely expect?
+
+The JD says:
+
+"Expertise with TypeScript and React"
+
+and specifically lists:
+
+React, TypeScript, CSS, Redux, Jest, Vite, Enzyme, Cypress
+
+That means React is not just a nice-to-have. Expect practical questions.
+
+But you probably don't need deep knowledge of every tool listed.
+
+Priority 1 — MUST KNOW
+1. React fundamentals
+
+You should be comfortable explaining and writing:
+
+function User({ name }) {
+    return <h1>Hello {name}</h1>;
+}
+
+Know:
+
+Components
+JSX
+Props
+State
+Event handling
+Conditional rendering
+Lists
+key
+Controlled components
+Forms
+
+For example:
+
+function UserForm() {
+    const [name, setName] = useState("");
+
+    return (
+        <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+        />
+    );
+}
+
+You should be able to explain exactly what happens here.
+
+2. Hooks — VERY IMPORTANT
+
+I would spend significant time here.
+
+Know:
+
+useState
+const [count, setCount] = useState(0);
+
+Understand:
+
+state updates
+re-rendering
+functional updates
+setCount(prev => prev + 1);
+useEffect
+useEffect(() => {
+    fetchUsers();
+}, []);
+
+Know:
+
+dependency array
+mount/update behavior
+cleanup
+common mistakes
+API calls
+
+Especially:
+
+useEffect(() => {
+    ...
+}, []);
+
+vs
+
+useEffect(() => {
+    ...
+});
+
+vs
+
+useEffect(() => {
+    ...
+}, [userId]);
+useMemo
+const result = useMemo(() => expensiveCalculation(data), [data]);
+useCallback
+const handleClick = useCallback(() => {
+    ...
+}, []);
+useRef
+const inputRef = useRef(null);
+
+You should understand why useRef doesn't cause a re-render when its value changes.
+
+3. React rendering — HIGH PRIORITY
+
+This is where interviewers can distinguish someone who has actually used React.
+
+Understand:
+
+State changes
+     ↓
+Component re-renders
+     ↓
+React creates new virtual representation
+     ↓
+Reconciliation
+     ↓
+DOM updates where required
+
+Know:
+
+Virtual DOM
+reconciliation
+component re-render
+key
+parent re-render → child behavior
+React.memo
+
+Example:
+
+const User = React.memo(({ name }) => {
+    console.log("render");
+    return <div>{name}</div>;
+});
+
+Know when React.memo helps and when it doesn't.
+
+4. TypeScript — VERY IMPORTANT
+
+Because the JD explicitly says TypeScript expertise.
+
+You should know at least:
+
+Basic types
+let name: string;
+let age: number;
+let active: boolean;
+Interfaces
+interface User {
+    id: number;
+    name: string;
+    email: string;
+}
+Type aliases
+type User = {
+    id: number;
+    name: string;
+};
+
+Know:
+
+interface vs type
+
+Generics
+
+Very important:
+
+function identity<T>(value: T): T {
+    return value;
+}
+
+And:
+
+const users: Array<User> = [];
+Union types
+let id: number | string;
+Optional properties
+interface User {
+    id: number;
+    name?: string;
+}
+any vs unknown
+
+You should be able to explain why excessive any is bad.
+
+5. Redux — HIGH PRIORITY
+
+Since it's explicitly mentioned:
+
+Understand the basic architecture:
+
+Component
+   ↓
+dispatch(action)
+   ↓
+Redux store
+   ↓
+reducer
+   ↓
+new state
+   ↓
+component re-renders
+
+Know:
+
+Store
+Action
+Reducer
+Dispatch
+Selector
+Redux Toolkit
+Global state vs local state
+
+Example:
+
+dispatch({
+    type: "USER_LOADED",
+    payload: user
+});
+
+Also know when you should NOT use Redux.
+
+That's a good interview question.
+
+6. API integration
+
+This is extremely important for your profile, because you already have backend experience.
+
+Know how React calls your Spring Boot API.
+
+For example:
+
+useEffect(() => {
+    fetch("/api/users")
+        .then(response => response.json())
+        .then(data => setUsers(data));
+}, []);
+
+Understand:
+
+React
+  |
+  | HTTP
+  ↓
+Spring Boot REST API
+  |
+  ↓
+Database
+
+Be ready to discuss:
+
+GET/POST/PUT/DELETE
+HTTP status codes
+loading state
+error state
+authentication
+JWT
+CORS
+interceptors
+handling API failures
+
+This is an area where your backend experience can compensate for less frontend depth.
+
+7. JavaScript ES2015+ — MUST KNOW
+
+The JD explicitly says:
+
+JavaScript (ES2015+)
+
+Don't skip this.
+
+Know:
+
+let, const, var
+Arrow functions
+const add = (a, b) => a + b;
+Destructuring
+const { name, age } = user;
+Spread
+const newUser = {
+    ...user,
+    age: 29
+};
+Map/filter/reduce
+users
+    .filter(u => u.active)
+    .map(u => u.name);
+Promises
+fetchUsers()
+    .then(...)
+    .catch(...);
+async/await
+const users = await fetchUsers();
+Event loop
+
+This is very likely worth preparing.
+
+Understand:
+
+Call Stack
+    ↓
+Web APIs
+    ↓
+Task/Microtask Queue
+    ↓
+Event Loop
+
+Especially:
+
+Promise/microtask
+setTimeout
+synchronous code
+async/await
+8. CSS / HTML
+
+Don't spend a huge amount of time here.
+
+You should know:
+
+HTML
+semantic HTML
+forms
+input types
+accessibility basics
+CSS
+box model
+display
+Flexbox
+Grid
+position
+responsive design
+media queries
+specificity
+
+Especially be able to explain:
+
+Flexbox vs Grid
+
+and:
+
+position: relative vs absolute vs fixed
+
+Priority 2
+
+These are worth knowing but don't spend hours on them.
+
+Jest
+
+Know:
+
+test("adds numbers", () => {
+    expect(add(2, 3)).toBe(5);
+});
+
+Understand:
+
+unit testing
+mocking
+describe
+test
+expect
+mocking API calls
+Cypress
+
+Understand what it is:
+
+End-to-end testing framework used to test application behavior in a real browser.
+
+Example scenario:
+
+Open login page
+   ↓
+Enter username/password
+   ↓
+Click Login
+   ↓
+Verify dashboard
+
+Don't spend hours learning Cypress syntax.
+
+Vite
+
+Know the purpose:
+
+Vite is a modern frontend build tool and development server commonly used with React.
+
+Understand:
+
+React source
+   ↓
+Vite
+   ↓
+Build/bundle
+   ↓
+Production assets
+
+You don't need deep Vite internals.
+
+Enzyme
+
+Low priority.
+
+Know what it is and that it was used for React component testing.
+
+If they ask:
+
+"Have you used Enzyme?"
+
+Don't fake experience.
+
+You can say:
+
+"I understand Enzyme as a React component testing utility. My stronger experience is with the React testing ecosystem around Jest, and I understand the concepts behind component rendering and interaction testing."
