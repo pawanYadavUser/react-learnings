@@ -418,4 +418,122 @@ You can say:
 
 =====================================================================================================================================
 
+3 hrs — React
+
+Components
+Props/state
+Hooks
+useEffect
+Rendering/reconciliation
+useMemo / useCallback
+Forms
+API calls
+
+2 hrs — JavaScript
+
+ES6+
+closures
+promises
+async/await
+event loop
+map/filter/reduce
+destructuring/spread
+this
+
+1.5 hrs — TypeScript
+
+interface/type
+generics
+union/intersection
+optional properties
+any/unknown
+React + TS props/state
+
+1 hr — Redux
+
+🟠 September 16 — Interview-oriented breadth
+
+2 hrs — SOLID + Design Patterns
+
+2 hrs — React interview questions + coding
+
+Build/understand something like:
+
+User Management App
+
+React + TypeScript
+       ↓
+GET /users
+       ↓
+Spring Boot API
+       ↓
+PostgreSQL
+
+Implement mentally or practically:
+
+list users
+loading indicator
+error handling
+search
+add user
+edit user
+delete user
+
+This will connect your frontend and backend experience.
+
+1 hr — Docker/K8s/Terraform
+
+You already know much of this.
+
+2 hrs — Java/Spring Boot
+
+Focus on:
+
+Spring Boot
+REST
+JPA/Hibernate
+N+1
+transactions
+exception handling
+Spring Security/JWT
+microservices
+Kafka/RabbitMQ
+design questions
+======================================================================================================================================
+
+Most likely React questions I'd prepare
+I would be able to answer these without hesitation:
+
+What is React?
+What is JSX?
+Props vs state?
+What causes a component to re-render?
+What is Virtual DOM?
+What is reconciliation?
+Why are keys required in lists?
+What is useState?
+What is useEffect?
+Explain the dependency array.
+What is cleanup in useEffect?
+useMemo vs useCallback?
+useRef vs useState?
+Controlled vs uncontrolled component?
+How do you call a REST API from React?
+How do you handle loading/error states?
+How does parent-child communication work?
+How do you share state between components?
+What is Redux?
+Redux vs Context API?
+When would you use Redux?
+What is React.memo?
+How do you optimize a React application?
+What is TypeScript and why use it?
+interface vs type?
+What are generics?
+any vs unknown?
+How do you type React props?
+How do you handle forms in React?
+How would you structure a large React application?
+
+======================================================================================================
 
