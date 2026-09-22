@@ -1,0 +1,604 @@
+Q1. What is React?
+
+React is a JavaScript library for building user interfaces, especially component-based web applications.
+
+The key idea is components.
+
+Instead of building one huge HTML page, we divide the UI into reusable components:
+
+Application
+│
+├── Header
+├── Sidebar
+├── UserList
+│   ├── UserCard
+│   ├── UserCard
+│   └── UserCard
+└── Footer
+
+For example:
+
+function UserCard({ name }) {
+    return <div>{name}</div>;
+}
+
+We can reuse it:
+
+<UserCard name="Pawan" />
+<UserCard name="Rahul" />
+<UserCard name="Amit" />
+Why React instead of directly manipulating the DOM?
+
+With plain JavaScript, you might do:
+
+document.getElementById("name").innerText = "Pawan";
+
+As the application becomes larger, manually finding and updating DOM elements becomes difficult to maintain.
+
+React lets you describe what the UI should look like based on the current state:
+
+State changes
+     ↓
+React re-renders
+     ↓
+React determines what changed
+     ↓
+Required DOM updates
+
+This is where the Virtual DOM and reconciliation concepts come in. You don't normally have to manually manipulate the DOM for every state change.
+
+🎯 Interview answer — memorize this version
+
+"React is a JavaScript library developed by Meta for building user interfaces using reusable, component-based architecture. Instead of manually manipulating the DOM whenever data changes, we define the UI based on the application's state, and React handles updating the required parts of the DOM through its rendering and reconciliation process. This makes complex UIs more maintainable and reusable."
+
+-------------------------------------------------
+
+Question 2 — Very important
+
+Suppose I have:
+
+function User() {
+    const [name, setName] = useState("Pawan");
+
+    return <h1>{name}</h1>;
+}
+
+What are name and setName, and what happens when I call setName("Rahul")
+
+You're partially right 👍 — but there's an important distinction.
+
+The code is:
+
+const [name, setName] = useState("Pawan");
+
+return <h1>{name}</h1>;
+What are name and setName?
+name      → current state value
+setName   → function used to update that state
+
+Initially:
+
+name = "Pawan"
+
+So React renders:
+
+<h1>Pawan</h1>
+
+When we do:
+
+setName("Rahul");
+
+React updates the state:
+
+name = "Rahul"
+
+Then React re-renders the component, and the output becomes:
+
+<h1>Rahul</h1>
+
+So your answer should be:
+
+"setName('Rahul') updates the name state. This causes the component to re-render, and React updates the <h1> so that it displays Rahul."
+
+Small correction to your answer
+
+You said:
+
+"update the header element"
+
+Technically, <h1> is a heading element, not a header element.
+
+More importantly, setName() doesn't directly modify the <h1>.
+
+Think:
+
+setName("Rahul")
+       ↓
+state changes
+       ↓
+component re-renders
+       ↓
+React compares previous/current UI
+       ↓
+<h1>Rahul</h1>
+
+This distinction is very interview-important.
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Question 3 — Props vs State
+
+Consider:
+
+function User({ name }) {
+    const [age, setAge] = useState(28);
+
+    return (
+        <div>
+            <h1>{name}</h1>
+            <p>{age}</p>
+        </div>
+    );
+}
+
+What is the difference between name and age here?
+
+Try answering in your own words.
+
+Exactly. That's a good interview answer. ✅
+
+I'd give your answer 9/10.
+
+Your understanding
+function User({ name }) {
+    const [age, setAge] = useState(28);
+name → Prop
+Parent Component
+      |
+      | name="Pawan"
+      ↓
+User Component
+
+Example:
+
+<User name="Pawan" />
+
+User receives "Pawan" as a prop.
+
+Props are generally read-only from the child component's perspective. The child shouldn't directly modify name.
+
+age → State
+User Component
+      |
+      ↓
+age = 28
+
+The User component owns this state.
+
+It can update it:
+
+setAge(29);
+
+That state update causes User to re-render.
+
+🎯 Interview-ready answer
+
+"Props are inputs passed from a parent component to a child component and are read-only from the child's perspective. State is data managed internally by a component and can be updated using a state setter such as setState or setAge. Updating state causes the component to re-render."
+
+One additional point interviewers may ask:
+
+Can a child modify its parent's state?
+
+The direct answer is:
+
+No. A child cannot directly modify the parent's state. The parent can pass a callback function as a prop, and the child can call that function to request a state update in the parent.
+
+----------------------------------------------------------------------------------------------------------
+
+Question 4 — Very common React question
+
+What happens when you call:
+
+setAge(29);
+
+Does React immediately change age from 28 to 29 on the next line?
+
+For example:
+const [age, setAge] = useState(28);
+setAge(29);
+console.log(age);
+
+What do you think this console.log(age) prints?
+
+Correct. ✅ A) 1
+
+This is a very important React interview concept.
+
+Suppose:
+
+const [count, setCount] = useState(0);
+
+setCount(count + 1);
+setCount(count + 1);
+setCount(count + 1);
+
+During this render:
+
+count = 0
+
+So all three calls effectively become:
+
+setCount(1);
+setCount(1);
+setCount(1);
+
+React batches them, and the final state is:
+
+count = 1
+But how do we make it 3?
+
+Use the functional state update:
+
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+
+Now React processes them sequentially:
+
+Initial: 0
+
+1st → prev = 0 → 1
+2nd → prev = 1 → 2
+3rd → prev = 2 → 3
+
+Final = 3
+🎯 Interview answer
+
+"When the next state depends on the previous state, I should use the functional updater form. Multiple setCount(count + 1) calls in the same render can use the same stale state snapshot, whereas setCount(prev => prev + 1) ensures each update receives the latest pending state."
+
+This is a very good concept to know for your interview.
+
+---------------------------------------------------------------------------------------------------------
+Question 5 — useEffect 🔥
+
+Now let's move to one of the most commonly asked React topics.
+
+What do you think this code does?
+
+useEffect(() => {
+    console.log("API call");
+}, []);
+
+Specifically:
+
+When will "API call" execute, and why is the [] there?
+
+Yes — your understanding is basically correct. I'd give that 9/10.
+
+One small correction:
+
+[] doesn't exactly "track" state/props.
+
+It tells React that the effect has no dependencies, so after the component's initial render, the effect runs once (with the usual caveat that React Strict Mode in development may run it an extra time).
+
+useEffect(() => {
+    console.log("API call");
+}, []);
+
+Think of it as:
+
+Component renders
+      ↓
+DOM/UI is committed
+      ↓
+useEffect runs
+      ↓
+"API call"
+
+Then if the component re-renders because some state changes:
+
+State changes
+    ↓
+Component re-renders
+    ↓
+[] hasn't changed
+    ↓
+Effect does NOT run again
+Compare these three — VERY important
+1. No dependency array
+useEffect(() => {
+    console.log("runs");
+});
+
+Runs after every render.
+
+2. Empty dependency array
+useEffect(() => {
+    console.log("runs");
+}, []);
+
+Runs after the initial render (normally once per mount).
+
+3. Dependency array with a value
+useEffect(() => {
+    console.log("runs");
+}, [userId]);
+
+Runs after the initial render and whenever userId changes.
+
+So remember:
+
+useEffect(fn)          → every render
+useEffect(fn, [])      → initial mount
+useEffect(fn, [value]) → initial mount + value changes
+🎯 Interview-ready answer
+
+"useEffect is used for side effects such as API calls, subscriptions, timers, or interacting with external systems. The second argument is the dependency array. An empty dependency array means the effect runs after the component mounts and doesn't run again for subsequent re-renders of that mount. If dependencies are provided, React re-runs the effect when those dependencies change.
+
+-----------------------------------------------------------------------------------------------------------
+
+Question 6 — This one catches people
+
+What will happen here?
+
+useEffect(() => {
+    console.log("Fetching users");
+
+    fetchUsers();
+}, [userId]);
+
+Suppose:
+
+userId = 10
+
+Then it changes:
+
+userId = 20
+
+When will the effect run, and what happens if userId changes from 20 → 30?
+
+Also: why do we put userId in the dependency array?
+
+You're very close. 8/10. The only important correction is when the effect runs.
+
+You said:
+
+"it will run in the same state snapshot render when it changes to 20"
+
+Not exactly.
+
+What actually happens
+
+Suppose:
+
+useEffect(() => {
+    console.log("Fetching users");
+    fetchUsers();
+}, [userId]);
+
+Initially:
+
+userId = 10
+
+Component renders → React commits the render → effect runs.
+
+Then:
+
+userId: 10 → 20
+
+The sequence is:
+
+userId changes
+      ↓
+React schedules update
+      ↓
+Component re-renders
+      ↓
+React compares dependency values
+      ↓
+10 !== 20
+      ↓
+Effect runs
+
+Then:
+
+20 → 30
+
+Same process:
+
+20 !== 30
+      ↓
+Effect runs again
+
+If:
+
+30 → 30
+
+the dependency hasn't changed, so the effect doesn't run again.
+
+Why put userId in the dependency array?
+
+Your answer is conceptually right, but I'd phrase it differently.
+
+Don't say:
+
+❌ "track userId changes in realtime"
+
+Say:
+
+✅ "We include userId because the effect depends on it. Whenever userId changes between renders, React re-runs the effect so that the side effect uses the current userId."
+
+This is particularly useful for API calls:
+
+useEffect(() => {
+    fetch(`/api/users/${userId}`);
+}, [userId]);
+
+If the user changes from ID 10 to ID 20, React fetches the data for user 20.
+
+🔥 Interview follow-up
+
+Now let's make it slightly harder.
+
+Consider:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+}, []);
+
+What problem do you see here?
+
+And what do you think happens if the component is removed/unmounted?
+
+Today 11:55 PM
+i think it will try to print hello repeatedly after 1 sec
+and removing it will stop that
+
+You're right about the first part, but there's an important React gotcha in the second part.
+
+What happens?
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+}, []);
+
+The interval starts, and you'll get:
+
+Hello
+Hello
+Hello
+Hello
+...
+
+every ~1 second.
+
+But removing the component does NOT automatically stop the interval ❌
+
+setInterval() is an external resource created by your code. React doesn't automatically know that it needs to cancel it.
+
+So you need a cleanup function:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log("Hello");
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, []);
+
+Now the lifecycle is:
+
+Component mounts
+      ↓
+useEffect runs
+      ↓
+setInterval starts
+      ↓
+Hello every 1 second
+      ↓
+Component unmounts
+      ↓
+cleanup function runs
+      ↓
+clearInterval(timer)
+      ↓
+Timer stopped
+🎯 Interview answer
+
+"useEffect can return a cleanup function. Cleanup is used to release resources created by the effect, such as timers, subscriptions, event listeners, or ongoing requests. In this example, I would call clearInterval when the component unmounts to prevent the interval from continuing to run."
+
+This is very important for your interview because it shows you understand more than just the syntax of useEffect.
+
+------------------------------------------------------------------------------------------------------------------------
+
+Question 7 — Cleanup + dependency
+
+Now consider:
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log(userId);
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, [userId]);
+
+Suppose:
+
+userId = 10
+
+Then it changes to:
+
+userId = 20
+
+Before React runs the new effect for userId = 20, what happens to the old interval that was printing 10?
+
+A) Both intervals continue
+B) React runs the cleanup and removes the old interval
+C) The old interval automatically changes from 10 to 20
+D) Nothing happens
+
+Good guess, but the correct answer is B. This is an important useEffect lifecycle rule.
+
+useEffect(() => {
+    const timer = setInterval(() => {
+        console.log(userId);
+    }, 1000);
+
+    return () => {
+        clearInterval(timer);
+    };
+}, [userId]);
+
+When:
+
+userId: 10 → 20
+
+React does:
+
+Previous effect
+    ↓
+cleanup()
+    ↓
+clearInterval(old timer)
+    ↓
+component renders with userId = 20
+    ↓
+new effect runs
+    ↓
+new timer starts
+
+So there is never supposed to be an old timer printing 10 alongside the new timer printing 20.
+
+Why doesn't it automatically change 10 → 20?
+
+Because this:
+
+setInterval(() => {
+    console.log(userId);
+}, 1000);
+
+created a callback associated with that particular effect execution. React doesn't modify the already-created timer's callback when userId changes.
+
+Instead:
+
+old effect → cleanup → new effect
+
+This pattern is extremely important.
+
+🎯 Remember this rule
+
+When dependencies change:
+
+Cleanup of the previous effect happens first, then the new effect runs.
+
+And when the component unmounts:
+
+Cleanup runs, but the new effect does not run.
