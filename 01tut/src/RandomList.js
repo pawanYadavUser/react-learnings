@@ -4,7 +4,7 @@ const RandomList = () => {
   //Step1 : generate array of 40 random numbers (0-100)
   const numbers = useMemo(
     () => Array.from({ length: 40 }, () => Math.floor(Math.random() * 101)),
-    []
+    [],
   );
 
   //Input state for filter

@@ -15,6 +15,7 @@ import ClickEventHandler from "./components/ClickEventHandler.js";
 import UserLogin from "./components/UserLogin.jsx";
 import { Welcome } from "./components/ClassComponent.jsx";
 import halo from "./images/halo.jpg";
+import tengenUzui from "./images/tengenUzui.jpg";
 import ListRendering from "./components/ListRendering.jsx";
 import RegularStyleSheet from "./components/RegularStyleSheet.js";
 import InlineStyle from "./components/InlineStyle.js";
@@ -39,8 +40,22 @@ import UseReducerHookMultipleUseReducer from "./components/useReducerHook/UseRed
 import UseContextAndUseReducer from "./components/useReducerHook/UseContextAndUseReducer.js";
 import UseReducerDataFetch from "./components/useReducerHook/UseReducerDataFetch.js";
 import MainComponent from "./components/usecallbackPractice/MainComponent.js";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import PrivateRoute from "./routes/PrivateRoute.js";
+import Dashboard from "./components/FetchData/Dashboard.js";
+import Content from "./Content.js";
+import WelcomeFunctional from "./components/WelcomeFunctional.js";
+import parent from "./components/ReactMemo/parent.js";
+import Parent from "./components/ReactMemo/parent.js";
+
 function App() {
   const name = "Dave";
+  const isLoggedIn = true; // change this based on your auth logic
   const handleNameChanges = () => {
     // Math.random()
     // → Generates a random number between 0 (inclusive) and 1 (exclusive).
@@ -57,17 +72,21 @@ function App() {
     const int = Math.floor(Math.random() * names.length);
     return names[int];
   };
+
   return (
     <div className="App">
-      {/* <Header />
-      <Content1 />
+      <Header />
+      <Content />
       <Footer />
       <Counter1 />
       <MemoizedExample />
       <RandomList />
-      <TodoApp /> */}
-      {/* <IntroToJSX />
+      <TodoApp />
+      <IntroToJSX />
       <DemoComponent />
+
+      {/* props related code */}
+
       <FunctionAsProps
         username="Alan Ritchson"
         country="Australia"
@@ -92,40 +111,93 @@ function App() {
         username="Alan stafford"
         country="Sweden"
         username2="Alan stafford2"
-      /> */}
+      />
       <Title />
-      {/* <ClickEventHandler /> */}
-      {/* <UserLogin />
-      <Welcome username="Pawan yadav">
+
+      <ClickEventHandler />
+      <UserLogin />
+      <Welcome username="Master chief2">
         <p>I am 28 years old</p>
         <p>I am a react developer</p>
         <img src={halo}></img>
-      </Welcome> */}
-      {/* <ListRendering /> */}
-      {/* <RegularStyleSheet primary={false} /> */}
-      {/* <InlineStyle />
+      </Welcome>
+      <WelcomeFunctional username="Lord Tengen Uzui">
+        <p>I am 28 years old</p>
+        <p>I am sound hashira</p>
+        <img src={tengenUzui}></img>
+      </WelcomeFunctional>
+
+      {/* map + styling */}
+
+      <ListRendering />
+      <RegularStyleSheet primary={false} />
+      <InlineStyle />
       <h1 className="error">Error !!!!!!!!!</h1>
-      <h2 className={myAppStyle.success}>Success############</h2> */}
-      {/* <FormInput /> */}
+      <h2 className={myAppStyle.success}>Success############</h2>
+
+      <FormInput />
+
+      {/* react useState hook example */}
+
       <HookStateArray />
       <DemoFragment />
       <MyTable />
       <Counter2 />
       <Counter3 />
-      {/* <ExampleUpdateTitleOnButtonClick /> */}
-      {/* <ExampleConditionallyRunUseEffect /> */}
-      {/* <EffectCleanupLogMousePointer /> */}
+
+      {/* react useEffect hook example */}
+
+      <ExampleUpdateTitleOnButtonClick />
+      <ExampleConditionallyRunUseEffect />
+      <EffectCleanupLogMousePointer />
       <EffectComponentWillUnmount />
+
+      {/* fetching data examples */}
       <FetchDataUsingAxios />
       <FetchSinglePostDataUsingAxios />
+
       <ComponentC />
-      {/* <UseReducerHookExample1 /> */}
+
+      <UseReducerHookExample1 />
       <UseReducerHookExample2 />
       <UseReducerHookMultipleUseReducer />
+
       <UseContextAndUseReducer />
+
       <UseReducerDataFetch />
+
       <MainComponent />
+
+      {/* ReactMemo example */}
+      <Parent />
     </div>
+
+    // <Router>
+    //   <Routes>
+    //     <Route
+    //       path="/"
+    //       element={
+    //         isLoggedIn ? <Navigate to="/dashboard" /> : <Navigate to="/login" />
+    //       }
+    //     />
+    //     <Route
+    //       path="/dashboard"
+    //       element={
+    //         <PrivateRoute>
+    //           <Dashboard />
+    //         </PrivateRoute>
+    //       }
+    //     />
+    //   </Routes>
+    // </Router>
+
+    // <Router>
+    //   <Routes>
+    //     <Route path="/" element={<Dashboard />} />
+    //     <Route path="/dashboard" element={<Dashboard />} />
+    //     {/* <Route path="/login" element={<Login />} /> */}
+    //   </Routes>
+    // </Router>
   );
 }
 

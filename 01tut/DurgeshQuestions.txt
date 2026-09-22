@@ -65,8 +65,20 @@ Otherwise, just return the cached result from last render.
 ✅ Interview-style Answer
 👉 “useMemo memoizes the result of an expensive calculation and recomputes it only when dependencies change. It’s useful for optimization, 
 preventing recalculations on every render. 
-In my random number list example, I use useMemo so the 40 random numbers don’t regenerate on every re-render when the input changes.”
+In my random number list example, 
+I use useMemo so the 40 random numbers don’t regenerate on every re-render
+ when the input changes.”
 
+|                  | `useEffect`                   | `useMemo`                        |
+| ---------------- | ----------------------------- | -------------------------------- |
+| Purpose          | Side effects                  | Cache calculation                |
+| Returns          | Nothing useful                | Memoized value                   |
+| Runs             | After render                  | During rendering                 |
+| Typical use      | API call, timer, subscription | Expensive calculation            |
+| Dependency array | Controls when effect runs     | Controls when value recalculates |
+
+useEffect is for synchronizing the component with external systems or performing side effects after rendering, 
+whereas useMemo is for memoizing the result of a computation so it isn't unnecessarily recalculated on every render.
 -----------------------------------------------------
 
 Do you want me to also explain how useMemo is different from useCallback? (that’s another common trap in interviews)?

@@ -1,0 +1,25 @@
+1. create the react app using below command :-
+   npx create-react-app@5.1.0 client
+
+2. delete the extra files from the client folder
+   app.css
+   setupTest.js
+   setWebVitals.js
+   logo.svg
+
+3. create components under components folder for all the building
+blocks u can see in the website!
+
+4. Tailwindcss installation
+npm uninstall tailwindcss
+npm uninstall tailwindcss@postcss
+npm install -D tailwindcss@3
+npx tailwindcss init -p
+
+set values in tailwind.config.css
+set values in index.css
+
+then run ur app, it should reflect the changes now!
+
+5. install react-icon library for icons
+

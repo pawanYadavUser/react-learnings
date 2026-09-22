@@ -10,8 +10,11 @@ export default function GlobalProviders({ children }) {
   };
 
   return (
-    <ThemeContext.Provider value={theme}>
-      <UserContext.Provider value={globalUser}>{children}</UserContext.Provider>
-    </ThemeContext.Provider>
+    // <ThemeContext.Provider value={theme}>
+    //   <UserContext.Provider value={globalUser}>{children}</UserContext.Provider>
+    // </ThemeContext.Provider>
+    <UserContext.Provider value={globalUser}>
+      <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
+    </UserContext.Provider>
   );
 }

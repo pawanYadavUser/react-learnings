@@ -305,7 +305,6 @@ JSX (a markup that describes a UI).
 
 2. Class based component:- see example ClassComponent.jsx
 
-
 Types of export:-
 - export default :
    can rename it to any value of your choice
@@ -586,3 +585,574 @@ e.g., UseContextAndUseReducer.js
 17. useReducer data fetch:-
 
 
+=====================================
+
+15/02/2026
+
+1. how to decide in react when to provide handler by its name anf when to provide it likr using arrow notqtion?
+In React, the difference is basically:
+
+onClick={handleClick}        // passing reference
+onClick={() => handleClick()} // passing function (arrow wrapper)
+
+The decision depends on whether you need to execute something immediately or pass arguments / add logic.
+
+✅ 1️⃣ Use function reference (preferred when possible)
+Use this when:
+You are NOT passing arguments
+You are NOT adding extra logic
+The handler signature already matches the event
+e.g.,
+function handleClick(event) {
+  console.log("Clicked");
+}
+👉 Default rule:
+If you don't need arguments → use function name.
+
+✅ 2️⃣ Use arrow function when you need arguments
+<button onClick={() => handleClick(id)}>Click</button>
+Use this when:
+You need to pass custom parameters
+You need to call multiple functions
+You need conditional logic
+e.g.,
+function handleClick(id) {
+  console.log(id);
+}
+
+| Situation                  | What to Use                       |
+| -------------------------- | --------------------------------- |
+| No arguments needed        | `onClick={handleClick}`           |
+| Passing arguments          | `onClick={() => handleClick(id)}` |
+| Multiple statements        | Arrow function                    |
+| Performance-sensitive list | `useCallback`                     |
+
+⚡ Interview-Ready Answer
+
+"If no arguments are required, I pass the handler reference directly to avoid unnecessary function creation. 
+ If arguments or additional logic are needed,
+ I wrap it in an arrow function."
+
+2. Importance of children in GlobalProvider.js?
+🔹 What is children?
+children is a special prop in React.
+It represents whatever you wrap inside this component when you use it.
+e.g.,
+If somewhere you use:
+<GlobalProviders>
+  <App />
+</GlobalProviders>
+
+Then inside GlobalProviders:
+children === <App />
+
+So this part:{children}
+means:
+👉 "Render whatever was passed between the opening and closing tags.
+🔥 Why It’s Important Here
+Your component is acting as a wrapper component.
+
+<UserContext.Provider value={globalUser}>
+  <ThemeContext.Provider value={theme}>
+    {children}
+  </ThemeContext.Provider>
+</UserContext.Provider>
+
+This means:
+Wrap all child components with UserContext
+Wrap them with ThemeContext
+Then render them
+So everything inside <GlobalProviders> gets access to both contexts
+
+================================================================================================
+
+Q: useMemo vs useEffect!
+The biggest difference is:
+useMemo gives you a value. useEffect does something after rendering.
+
+const [count, setCount] = useState(0);
+const [name, setName] = useState("Pawan");
+
+You want to calculate:
+const result = count * 10;
+
+With useMemo:
+const result = useMemo(() => {
+    return count * 10;
+}, [count]);
+
+Now result is a value.
+
+You can do:
+console.log(result);
+or:
+return <div>{result}</div>;
+
+What happens with useEffect?
+You could do:
+const [result, setResult] = useState(0);
+
+useEffect(() => {
+    setResult(count * 10);
+}, [count]);
+
+This seems like the same thing, right?
+But look carefully.
+
+With useEffect:
+count changes
+     ↓
+React renders
+     ↓
+UI initially renders
+     ↓
+useEffect runs
+     ↓
+setResult()
+     ↓
+React renders AGAIN
+
+You have caused an additional render.
+With useMemo:
+count changes
+     ↓
+React renders
+     ↓
+useMemo calculates result
+     ↓
+UI renders with result
+
+No extra state update/render is required.
+
+------------------------------------------------------------------------------
+
+One very important distinction
+You might ask:                        
+"But useMemo also executes a function when dependencies change. Isn't that basically an effect?"
+No, because of WHEN and WHY it executes.
+useMemo executes as part of calculating the value needed for the render.
+useEffect executes after the render to synchronize with something outside React.
+
+                 React render
+                     │
+          ┌──────────┴──────────┐
+          ↓                     ↓
+      useMemo                UI rendering
+          │
+      calculate value
+          │
+          ↓
+       use value
+
+
+       React render
+            │
+            ↓
+          UI
+            │
+            ↓
+       useEffect
+            │
+     external action
+       ↙    ↓     ↘
+     API  timer  subscription
+
+Remember this for your interview
+
+useMemo:
+
+"I need a value and I want to avoid recalculating it unnecessarily."
+
+useEffect:
+
+"I need to perform an action/side effect when something changes."
+
+And one more important point: don't use useMemo just because a calculation exists. 
+It's primarily useful when the calculation is sufficiently expensive or referential stability matters; 
+ordinary cheap calculations can just be calculated during render.
+
+-------------------------------------------------------------------------
+
+Q:- What is React.memo ?
+What problem does React.memo solve?
+
+Imagine we have a parent and child:
+function Parent() {
+    const [count, setCount] = useState(0);
+
+    return (
+        <>
+            <button onClick={() => setCount(count + 1)}>
+                Count: {count}
+            </button>
+
+            <Child />
+        </>
+    );
+}
+
+And:
+
+function Child() {
+    console.log("Child rendered");
+
+    return <h2>Hello Pawan</h2>;
+}
+
+Now click the button.
+
+What happens?
+count changes
+     ↓
+Parent renders again
+     ↓
+Child renders again
+Even though Child doesn't depend on count!
+You might see:
+Child rendered
+Child rendered
+Child rendered
+Child rendered
+
+every time you click.
+--------------------------
+2. Enter React.memo
+
+We can write:
+
+const Child = React.memo(function Child() {
+    console.log("Child rendered");
+
+    return <h2>Hello Pawan</h2>;
+});
+
+Now React says:
+
+"Before re-rendering Child, I'll check whether its props changed."
+
+So:
+
+count changes
+     ↓
+Parent renders
+     ↓
+Did Child's props change?
+     ↓
+     NO
+     ↓
+Don't render Child
+
+That's the basic purpose of React.memo.
+Think of it as:
+"If my props haven't changed, don't unnecessarily render this component."
+---------------------------------------------------
+3. But now comes the important part: props
+Consider this:
+
+function Parent() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = () => {
+        console.log("Clicked");
+    };
+
+    return (
+        <>
+            <button onClick={() => setCount(count + 1)}>
+                {count}
+            </button>
+
+            <Child onClick={handleClick} />
+        </>
+    );
+}
+
+And:
+
+const Child = React.memo(function Child({ onClick }) {
+    console.log("Child rendered");
+
+    return <button onClick={onClick}>Child Button</button>;
+});
+
+You might expect:
+
+count changes
+     ↓
+Parent renders
+     ↓
+Child's onClick didn't logically change
+     ↓
+Child should NOT render
+
+But that's not what happens.
+Why?
+----------------------
+4. The problem is that functions are objects/references
+
+Every time Parent renders:
+
+const handleClick = () => {
+    console.log("Clicked");
+};
+
+a new function object is created.
+
+Imagine:
+
+First render
+handleClick → Function A
+Second render
+handleClick → Function B
+
+Even though they contain exactly the same code:
+
+Function A !== Function B
+
+So React.memo sees:
+Previous props:
+onClick → Function A
+New props:
+onClick → Function B
+It says:
+"The prop changed!"
+Therefore:
+Child renders again
+--------------------------
+5. This is where useCallback comes in
+Now change Parent:
+
+function Parent() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = useCallback(() => {
+        console.log("Clicked");
+    }, []);
+
+    return (
+        <>
+            <button onClick={() => setCount(count + 1)}>
+                {count}
+            </button>
+
+            <Child onClick={handleClick} />
+        </>
+    );
+}
+
+Now useCallback remembers the function reference.
+Instead of:
+Render 1 → Function A
+Render 2 → Function B
+Render 3 → Function C
+
+we get:
+Render 1 → Function A
+Render 2 → Function A
+Render 3 → Function A
+Therefore React.memo sees:
+Previous:
+onClick → Function A
+New:
+onClick → Function A
+Same reference.
+So:
+React.memo
+     ↓
+props haven't changed
+     ↓
+don't render Child
+--------------------
+6. Now the relationship should become clear
+There are actually two separate things happening.
+
+React.memo
+Applied to the component:
+const Child = React.memo(ChildComponent);
+Its job:
+"Don't re-render this component if its props haven't changed."
+
+useCallback
+Applied to the function:
+const handleClick = useCallback(() => {
+    ...
+}, []);
+Its job:
+"Keep the same function reference between renders unless dependencies change."
+Together:
+                 Parent
+                   │
+             Parent re-renders
+                   │
+                   ↓
+             useCallback
+                   │
+          same function reference
+                   │
+                   ↓
+            Child receives it
+                   │
+                   ↓
+              React.memo
+                   │
+           props unchanged
+                   │
+                   ↓
+             Child skips render
+That's the relationship.
+---------------------------------
+7. Let's compare without and with useCallback
+Without useCallback
+function Parent() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = () => {
+        console.log("Clicked");
+    };
+
+    return <Child onClick={handleClick} />;
+}
+
+Every Parent render:
+
+Parent render #1
+handleClick → A
+Child gets A
+        ↓
+Parent render #2
+handleClick → B
+Child gets B
+        ↓
+React.memo says:
+"A !== B"
+        ↓
+Child renders
+With useCallback
+function Parent() {
+    const [count, setCount] = useState(0);
+
+    const handleClick = useCallback(() => {
+        console.log("Clicked");
+    }, []);
+
+    return <Child onClick={handleClick} />;
+}
+
+Now:
+
+Parent render #1
+handleClick → A
+Child gets A
+        ↓
+Parent render #2
+handleClick → A
+Child gets A
+        ↓
+React.memo says:
+"A === A"
+        ↓
+Child doesn't need to render
+------------------------------------
+8. But there's an important catch
+Don't conclude:
+"Whenever I use React.memo, I should use useCallback."
+No.
+If you have:
+<Child name="Pawan" />
+and:
+const Child = React.memo(ChildComponent);
+then useCallback isn't relevant because name is just a string.
+
+Similarly:
+
+<Child age={28} />
+
+No need for useCallback.
+It becomes particularly relevant when you're passing functions as props:
+
+<Child onClick={handleClick} />
+because a normal function created during render gets a new reference.
+
+9. One more example with an actual useful scenario
+Imagine:
+function Parent() {
+    const [count, setCount] = useState(0);
+    const [users, setUsers] = useState([]);
+
+    const deleteUser = useCallback((id) => {
+        setUsers(users => users.filter(user => user.id !== id));
+    }, []);
+
+    return (
+        <>
+            <button onClick={() => setCount(count + 1)}>
+                Count: {count}
+            </button>
+
+            <UserList
+                users={users}
+                onDelete={deleteUser}
+            />
+        </>
+    );
+}
+
+And:
+
+const UserList = React.memo(function UserList({ users, onDelete }) {
+    console.log("UserList rendered");
+
+    return (
+        <>
+            {users.map(user => (
+                <button onClick={() => onDelete(user.id)}>
+                    Delete {user.name}
+                </button>
+            ))}
+        </>
+    );
+});
+
+When count changes:
+
+count changes
+    ↓
+Parent renders
+    ↓
+users = same
+onDelete = same reference
+    ↓
+React.memo checks props
+    ↓
+No props changed
+    ↓
+UserList doesn't re-render
+
+That's where this optimization can be useful.
+
+The 3 hooks/components together
+
+You can remember them like this:
+
+useMemo
+   ↓
+memoizes a VALUE
+
+
+useCallback
+   ↓
+memoizes a FUNCTION
+
+
+React.memo
+   ↓
+memoizes a COMPONENT'S rendering
+
+Or, for an interview:
+React.memo prevents unnecessary re-rendering of a component when its props haven't changed. 
+
+useCallback maintains a stable function reference between renders. They are often used together when a parent passes a callback to a 
+memoized child, because otherwise the newly created function reference can make React.memo think that the child's props changed.
+
+And one subtle point interviewers like: React.memo does not mean the child will never re-render. 
+It can still render when its own state changes, its context changes, or its props actually change.

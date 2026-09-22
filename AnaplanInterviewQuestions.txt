@@ -1,0 +1,10 @@
+1. react redux vs local state!
+2. useMemo vs useCallback
+3. how UI application will be logout from all tabs, if opened in mulitple tabs?
+4. xssf or xsrf attack and protection!
+5. git reset vs git revert
+6. git merge
+7. REST services 
+8. SQL injection and types!
+9. typescript basics!
+
