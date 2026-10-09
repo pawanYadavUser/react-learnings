@@ -52,6 +52,8 @@ import Content from "./Content.js";
 import WelcomeFunctional from "./components/WelcomeFunctional.js";
 import parent from "./components/ReactMemo/parent.js";
 import Parent from "./components/ReactMemo/parent.js";
+import RandomList2 from "./RandomList2.js";
+import TodoAppPractice from "./ToDOAppPractice.js";
 
 function App() {
   const name = "Dave";
@@ -81,7 +83,10 @@ function App() {
       <Counter1 />
       <MemoizedExample />
       <RandomList />
+      <RandomList2 />
       <TodoApp />
+      <TodoAppPractice />
+
       <IntroToJSX />
       <DemoComponent />
 
