@@ -55,7 +55,19 @@ import Parent from "./components/ReactMemo/parent.js";
 import RandomList2 from "./RandomList2.js";
 import TodoAppPractice from "./ToDOAppPractice.js";
 
+import { useDispatch, useSelector } from "react-redux";
+import {
+  increment,
+  decrement,
+  incrementByAmount,
+  reset,
+} from "./features/counter/counterSlice.js";
+
 function App() {
+  //access the count value from the store!
+  const countFromRedux = useSelector((store) => store.counter.count);
+  const dispatch = useDispatch();
+
   const name = "Dave";
   const isLoggedIn = true; // change this based on your auth logic
   const handleNameChanges = () => {
@@ -75,8 +87,23 @@ function App() {
     return names[int];
   };
 
+  const actions = { increment, decrement, incrementByAmount, reset };
+
   return (
     <div className="App">
+      <p> React-redix value from store : {countFromRedux}</p>
+      <div>
+        {Object.entries(actions).map(([name, action]) => (
+          <button
+            key={name}
+            onClick={() =>
+              dispatch(name === "incrementByAmount" ? action(5) : action())
+            }
+          >
+            {name} the react-redux store value
+          </button>
+        ))}
+      </div>
       <Header />
       <Content />
       <Footer />
@@ -86,12 +113,9 @@ function App() {
       <RandomList2 />
       <TodoApp />
       <TodoAppPractice />
-
       <IntroToJSX />
       <DemoComponent />
-
       {/* props related code */}
-
       <FunctionAsProps
         username="Alan Ritchson"
         country="Australia"
@@ -118,7 +142,6 @@ function App() {
         username2="Alan stafford2"
       />
       <Title />
-
       <ClickEventHandler />
       <UserLogin />
       <Welcome username="Master chief2">
@@ -131,48 +154,34 @@ function App() {
         <p>I am sound hashira</p>
         <img src={tengenUzui}></img>
       </WelcomeFunctional>
-
       {/* map + styling */}
-
       <ListRendering />
       <RegularStyleSheet primary={false} />
       <InlineStyle />
       <h1 className="error">Error !!!!!!!!!</h1>
       <h2 className={myAppStyle.success}>Success############</h2>
-
       <FormInput />
-
       {/* react useState hook example */}
-
       <HookStateArray />
       <DemoFragment />
       <MyTable />
       <Counter2 />
       <Counter3 />
-
       {/* react useEffect hook example */}
-
       <ExampleUpdateTitleOnButtonClick />
       <ExampleConditionallyRunUseEffect />
       <EffectCleanupLogMousePointer />
       <EffectComponentWillUnmount />
-
       {/* fetching data examples */}
       <FetchDataUsingAxios />
       <FetchSinglePostDataUsingAxios />
-
       <ComponentC />
-
       <UseReducerHookExample1 />
       <UseReducerHookExample2 />
       <UseReducerHookMultipleUseReducer />
-
       <UseContextAndUseReducer />
-
       <UseReducerDataFetch />
-
       <MainComponent />
-
       {/* ReactMemo example */}
       <Parent />
     </div>

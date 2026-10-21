@@ -1259,8 +1259,8 @@ One small note: 5 seconds is quite long for a search/filter debounce. Usually yo
 
 Q:- What is react redux Toolkit?
 React Redux — interview-friendly explanation
-Since you already understand useState and useReducer, think of Redux as centralized state management for a 
-React application.
+Since you already understand useState and useReducer, think of Redux as 
+centralized state management for a React application.
 
 Instead of each component maintaining important shared state independently, 
 Redux keeps shared application state in a central store.
@@ -1670,3 +1670,16 @@ The 6 things I'd memorize for your interview
 
 6. Provider
    → makes Redux store available to React components
+
+========================================================
+
+Here’s a summary of the mistakes in the Redux button section:
+
+- **Tried to call an object as a function:** `dispatch({ element }())` creates an object; 
+    it doesn’t retrieve an action creator by name.
+- **Needed to map names to action creators:** Use an object like `{ increment, decrement, incrementByAmount, reset }`, then iterate over its entries.
+- **Forgot to return JSX from `.map()`:** With a callback body using `{ ... }`, you need an explicit `return`. Using `(...)` returns the JSX implicitly.
+- **Used a payload-less call for `incrementByAmount`:** That reducer reads `action.payload`, so pass a number, such as `incrementByAmount(5)`.
+- **Missed the React list `key`:** Each mapped button needs a stable `key`, such as `key={name}`.
+
+These are the issues we identified in the versions you shared.
