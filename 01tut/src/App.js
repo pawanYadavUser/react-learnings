@@ -63,6 +63,8 @@ import {
   reset,
 } from "./features/counter/counterSlice.js";
 
+import Timer from "./components/useRefPractice/Timer.js";
+
 function App() {
   //access the count value from the store!
   const countFromRedux = useSelector((store) => store.counter.count);
@@ -184,6 +186,8 @@ function App() {
       <MainComponent />
       {/* ReactMemo example */}
       <Parent />
+      {/* useRef example */}
+      <Timer />
     </div>
 
     // <Router>
