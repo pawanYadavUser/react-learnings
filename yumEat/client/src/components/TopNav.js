@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { AiOutlineMenu, AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
-import { BsFillCartFill, BsPerson } from 'react-icons/bs';
-import {TbTruckReturn} from 'react-icons/tb';
-import {FaGoogleWallet} from 'react-icons/fa';
-import {MdHelp, MdOutlineFavorite} from 'react-icons/md';
-
+import { BsFillCartFill, BsPerson } from "react-icons/bs";
+import { TbTruckReturn } from "react-icons/tb";
+import { FaGoogleWallet } from "react-icons/fa";
+import { MdHelp, MdOutlineFavorite } from "react-icons/md";
 
 export const TopNav = () => {
-
   const [navBar, setNavbar] = useState(false);
 
   return (
@@ -37,52 +35,74 @@ export const TopNav = () => {
       </div>
 
       <button className="bg-orange-700 text-white hidden md:flex items-center py-2 rounded-full">
-        <BsFillCartFill size={20} />Cart
+        <BsFillCartFill size={20} />
+        Cart
       </button>
 
-      {
-        navBar ? (<div className="bg-black/60 fixed w-full h-screen z-10 top-0 left-0" 
-        onClick={()=>setNavbar(!navBar)}></div>)
-          : ("")
-      }
+      {navBar ? (
+        <div
+          className="bg-black/60 fixed w-full h-screen z-10 top-0 left-0"
+          onClick={() => setNavbar(!navBar)}
+        ></div>
+      ) : (
+        ""
+      )}
 
-      <div className={navBar ? "fixed top-0 left-0 w-[300px] h-screen bg-white z-10 duration-200"
-        : "fixed top-0 left-[-100%] w-[300px] h-screen bg-white z-10 duration-200"
-      }>
-        <AiOutlineClose onClick={() => setNavbar(false)} size={25}
+      <div
+        className={
+          navBar
+            ? "fixed top-0 left-0 w-[300px] h-screen bg-white z-10 duration-200"
+            : "fixed top-0 left-[-100%] w-[300px] h-screen bg-white z-10 duration-200"
+        }
+      >
+        <AiOutlineClose
+          onClick={() => setNavbar(false)}
+          size={25}
           className="absolute right-4 top-4 bg-color-white cursor-pointer hover:bg-gray-200"
         />
-        <h2 className="text-2xl p-4">Yum <span className="text-orange-900 font-bold">Eats</span></h2>
+        <h2 className="text-2xl p-4">
+          Yum <span className="text-orange-900 font-bold">Eats</span>
+        </h2>
         <nav>
           <ul className="flex flex-col p-4 text-gray-800">
             <li className="text-xl py-4 flex">
-              <BsPerson className="mr-4 text-white bg-black rounded-full" size={25} />
+              <BsPerson
+                className="mr-4 text-white bg-black rounded-full"
+                size={25}
+              />
               My Account
             </li>
             <li className="text-xl py-4 flex">
-              <TbTruckReturn className="mr-4 text-white bg-black rounded-full" size={25} />
+              <TbTruckReturn
+                className="mr-4 text-white bg-black rounded-full"
+                size={25}
+              />
               Delivery
             </li>
             <li className="text-xl py-4 flex">
-              <MdOutlineFavorite className="mr-4 text-white bg-black rounded-full" size={25} />
+              <MdOutlineFavorite
+                className="mr-4 text-white bg-black rounded-full"
+                size={25}
+              />
               My Favorite
             </li>
             <li className="text-xl py-4 flex">
-              <FaGoogleWallet className="mr-4 text-white bg-black rounded-full" size={25} />
+              <FaGoogleWallet
+                className="mr-4 text-white bg-black rounded-full"
+                size={25}
+              />
               My Wallet
             </li>
             <li className="text-xl py-4 flex">
-              <MdHelp className="mr-4 text-white bg-black rounded-full" size={25} />
+              <MdHelp
+                className="mr-4 text-white bg-black rounded-full"
+                size={25}
+              />
               Help
             </li>
           </ul>
         </nav>
-
       </div>
-
-
-
-
     </div>
   );
 };
