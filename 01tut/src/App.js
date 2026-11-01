@@ -93,7 +93,7 @@ function App() {
 
   return (
     <div className="App">
-      <p> React-redix value from store : {countFromRedux}</p>
+      <p> React-redux value from store : {countFromRedux}</p>
       <div>
         {Object.entries(actions).map(([name, action]) => (
           <button

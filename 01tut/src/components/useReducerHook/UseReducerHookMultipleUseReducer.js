@@ -68,6 +68,7 @@ export default function UseReducerHookMultipleUseReducer() {
       >
         Decrement B
       </button>
+
       <button
         onClick={() => {
           dispatchB({ type: "Increment", value: 5 });

@@ -1588,10 +1588,9 @@ Component
 useReducer
    |
 Local state
+
 Redux
-
 State is centralized:
-
 Multiple Components
        ↓
    Redux Store
@@ -1600,23 +1599,24 @@ Shared State
 
 A useful interview answer:
 
-"useReducer is a React Hook for managing complex local state transitions, whereas Redux is a state-management library designed primarily for managing shared application state across multiple components. Redux also provides a centralized store and additional tooling and middleware."
+"useReducer is a React Hook for managing complex local state transitions, 
+whereas Redux is a state-management library designed primarily for 
+managing shared application state across multiple components. 
+Redux also provides a centralized store and additional tooling and middleware."
 
 11. Redux vs Context API
 
 Another important interview question.
 
 Context API
-
 Useful for relatively simple shared values such as:
-
 Theme
 Language
 Current user
+
 Redux
-
-Useful when you have complex application state and many state transitions:
-
+Useful when you have complex application state and 
+many state transitions:
 User
 Cart
 Orders
@@ -1627,9 +1627,7 @@ Notifications
 etc.
 
 Don't say:
-
 "Context cannot manage complex state."
-
 It can. The difference is that Redux provides a more structured state-management ecosystem with reducers, actions, middleware, Redux DevTools, etc.
 
 12. One important Redux Toolkit concept

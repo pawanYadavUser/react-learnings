@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import {
-  BsChevronCompactLeft,
-  BsChevronCompactRight,
-} from "react-icons/bs";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 import { RxDotFilled } from "react-icons/rx";
 
 function Featured() {
@@ -53,11 +50,11 @@ function Featured() {
         >
           <BsChevronCompactRight onClick={nextSlider} />
         </div>
-        <div className="flex top-4 justify-center py-2">
+        <div className="flex justify-center space-x-10 py-2 absolute bottom-4 left-1/2 z-10 -translate-x-1/2 text-white drop-shadow-lg">
           {sliders.map((sliderItems, sliderIndex) => (
             <div
               key={sliderIndex}
-              className="text-2xl cursor-pointer absolute bottom-4 left-1/2 z-10 flex -translate-x-1/2 text-white drop-shadow-lg"
+              className="text-2xl cursor-pointer "
               onClick={() => moveSlider(sliderIndex)}
             >
               <RxDotFilled />
