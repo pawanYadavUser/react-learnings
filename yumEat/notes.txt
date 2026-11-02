@@ -23,3 +23,10 @@ then run ur app, it should reflect the changes now!
 
 5. install react-icon library for icons
 
+6. Feature	Node.js	Vite
+What is it?	A JavaScript runtime.	A frontend build tool and bundler.
+Primary Job	Executes JavaScript backend code, handles database connections, and hosts APIs.	Bundles, minifies, and compiles frontend assets for modern web browsers.
+Where it Runs	On a server or local machine.	On a developer's machine (dev server) to output static files for browsers.
+Target Code	Backend APIs, server scripts, and tooling ecosystems.	HTML, CSS, client-side JS/TS, React, Vue, Svelte, etc.
+Dependencies	Self-contained environment.	Requires Node.js to be installed on your machine to execute.
+
